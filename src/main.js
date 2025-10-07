@@ -1,15 +1,9 @@
 import { toggleFireflies } from './fireflies.js';
 document.addEventListener('DOMContentLoaded', () => {
-    // ============================================
-    // КОНСТАНТЫ
-    // ============================================
     const DIALOG_SHOW_DURATION = 6000;
     const DIALOG_HIDE_DELAY = 500;
     const TRANSITION_DURATION = 1000;
-
-    // ============================================
-    // ПОЛУЧЕНИЕ ЭЛЕМЕНТОВ DOM
-    // ============================================
+    
     const elements = {
         bench: document.querySelector('.us_cont'),
         dialogs: [
@@ -36,12 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         loadingScreen: document.getElementById('loading-screen'),
         fireflyCanvas: document.getElementById('fireflyCanvas'),
-        backgroundMusic: document.getElementById('background-music') // ДОБАВЛЕНО
+        backgroundMusic: document.getElementById('background-music') 
     };
 
-    // ============================================
-    // МОДУЛЬ УПРАВЛЕНИЯ ДИАЛОГАМИ
-    // ============================================
     const DialogManager = {
         activeDialog: null,
         availableDialogs: [],
@@ -113,10 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, delay);
         }
     };
-
-    // ============================================
-    // МОДУЛЬ УПРАВЛЕНИЯ ПЕРЕХОДАМИ СЦЕН
-    // ============================================
+    
     const SceneManager = {
     isInside: false,
 
@@ -125,8 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Ошибка: не найдены элементы сцены');
             return false;
         }
-
-        // Предзагрузка изображения интерьера
+        
         this.preloadInteriorImage();
 
         elements.house.addEventListener('click', () => this.transition('enter'));
@@ -143,7 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
     enterHouse() {
         this.isInside = true;
 
-        // Batch DOM updates
         requestAnimationFrame(() => {
             elements.candle?.classList.remove('candle_hidden');
             elements.note?.classList.remove('note_hidden');
@@ -151,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
             elements.hint?.classList.add('hidden');
         });
 
-        // Останавливаем анимацию светлячков
         toggleFireflies(false);
     },
 
@@ -165,12 +150,10 @@ document.addEventListener('DOMContentLoaded', () => {
             elements.hint?.classList.remove('hidden');
         });
 
-        // Возобновляем анимацию светлячков
         toggleFireflies(true);
     },
 
     transition(direction) {
-        // Блокируем повторные клики
         if (elements.overlay.classList.contains('active')) return;
 
         elements.overlay.classList.add('active');
@@ -187,10 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 };
 
-
-    // ============================================
-    // МОДУЛЬ УПРАВЛЕНИЯ МОДАЛЬНЫМ ОКНОМ
-    // ============================================
     const ModalManager = {
         init() {
             if (!elements.note || !elements.modal || !elements.closeButton) {
@@ -201,7 +180,6 @@ document.addEventListener('DOMContentLoaded', () => {
             elements.note.addEventListener('click', () => this.open());
             elements.closeButton.addEventListener('click', () => this.close());
             
-            // Оптимизация: закрытие только по клику на overlay
             elements.modal.addEventListener('click', (e) => {
                 if (e.target === elements.modal) {
                     this.close();
@@ -213,55 +191,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
         open() {
             elements.modal.classList.remove('modal_hidden');
-            // Блокируем прокрутку body
+
             document.body.style.overflow = 'hidden';
         },
 
         close() {
             elements.modal.classList.add('modal_hidden');
-            // Возвращаем прокрутку
+
             document.body.style.overflow = '';
         }
     };
     const AudioManager = {
         init() {
             const loaderButton = document.querySelector('.loader_button_span');
-            // Добавляем обработчик на любой клик на документе, чтобы запустить музыку
+          
             loaderButton.addEventListener('click', this.playBackgroundMusicOnce, { once: true });
         },
 
         playBackgroundMusicOnce() {
             if (elements.backgroundMusic) {
-                elements.backgroundMusic.volume = 0.01; // Установите громкость (0.0 до 1.0)
+                elements.backgroundMusic.volume = 0.01; 
                 elements.backgroundMusic.play().catch(error => {
                     console.warn("Автовоспроизведение музыки заблокировано браузером:", error);
-                    // Здесь можно показать кнопку "Включить звук", если нужно
+                    
                 });
             }
         },
 
-        playBackgroundMusic() { // Функция для ручного запуска, если нужно
+        playBackgroundMusic() {
             if (elements.backgroundMusic && elements.backgroundMusic.paused) {
                 elements.backgroundMusic.play();
             }
         },
 
-        pauseBackgroundMusic() { // Функция для паузы
+        pauseBackgroundMusic() { 
             if (elements.backgroundMusic && !elements.backgroundMusic.paused) {
                 elements.backgroundMusic.pause();
             }
         },
 
-        setVolume(volume) { // Функция для изменения громкости
+        setVolume(volume) { 
             if (elements.backgroundMusic) {
                 elements.backgroundMusic.volume = volume;
             }
         }
     };
 
-    // ============================================
-    // ИНИЦИАЛИЗАЦИЯ ВСЕХ МОДУЛЕЙ
-    // ============================================
     const initSuccess = [
         DialogManager.init(),
         SceneManager.init(),
@@ -269,9 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
         AudioManager.init()
     ].every(Boolean);
 
-    if (initSuccess) {
-        console.log('✅ Все модули инициализированы');
-    }
     const loaderButton = document.querySelector('.loader_button_span');
     loaderButton.addEventListener('click', () => {
         elements.loadingScreen.classList.add('hidden');
