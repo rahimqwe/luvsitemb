@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ну типа наш дворик...</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preload" href="textures/inside.jpeg" as="image">
+    <link rel="preload" href="textures/background.jpeg" as="image">
+    <link rel="preload" href="textures/house.png" as="image">
+    <link rel="preload" href="textures/us.png" as="image">
+    <link rel="preload" href="textures/moon.png" as="image">
+    <link rel="preload" href="textures/note.png" as="image">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="wrapper">
+        <main>
+            <div id="loading-screen">
+                <div class="loader"> Нажми Ф11 пожалуйста а то хуево будет выглядеть все !! </div>
+                <div class="loader_button"> <span class="loader_button_span">зайти !</span></div>
+            </div>
+            
+            <div id="ui-overlay">
+                <div id="hint" class="hint">тык по домику что бы войти !</div>
+                <button id="exit-btn" class="btn hidden">← обратно во двор !</button>
+            </div>
+            <div>
+                <canvas id="fireflyCanvas"></canvas>
+            </div>
+            <img class="moon_cont" src="textures/moon.png" alt="moon">
+            <div class="house_cont">
+                <div class="zxc">
+                    <img class="house" src="textures/house.png" alt="house">
+                    <div class="fog"></div>
+                    <div class="candle-light"></div>
+                </div>
+            </div>
+            <div class="us_cont">
+                <img class="us" src="textures/us.png" alt="us">
+            </div>
+            <div class="messages">
+                <div class="dialog message-1">
+                    <p>луна сегодня такая красивая..</p>
+                    <p>настолько красивая, что умереть можно..</p>
+                </div>
+                <div class="dialog message-2">
+                    <p>люблю тебя</p>
+                    <p>и я люблю тебя</p>
+                </div>
+                <div class="dialog message-3">
+                    <p>пошли в майн?...</p>
+                    <p>пошли</p>
+                </div>
+                <div class="dialog message-4">
+                    <p>с днем рождения любимая...</p>
+                    <p>пасиба !</p>
+                </div>
+                <div class="dialog message-5">
+                    <p>прости что такой хуевый подарок</p>
+                    <p>...</p>
+                </div>
+                <div class="dialog message-6">
+                    <p>покусай меня пожалуйста</p>
+                    <p>псих</p>
+                </div>
+                <div class="dialog message-7">
+                    <p>может это сон? не хочу просыпаться</p>
+                    <p>может и сон...</p>
+                </div>
+                <div class="dialog message-8">
+                    <p>не уходи никуда пожалуйста...</p>
+                    <p>не уйду</p>
+                </div>
+                <div class="dialog message-9">
+                    <p>время лечит все раны, ты согласна?</p>
+                    <p>хотелось бы верить</p>
+                </div>
+            </div>
+            <div class="transition-overlay">
+            </div>
+            <div class="candle_cont candle_hidden">
+                <div class="inside_candle_lightning"></div>
+            </div>
+            <div class="note_cont note_hidden">
+                <img src="textures/note.png" alt="Записка на столе" class="interactive-note">
+            </div>
+            <div id="note-modal" class="modal modal_hidden">
+                <div class="modal_border">
+                    <div class="modal_content">
+                    <div class="close-button"><span>убрать листочек...</span></div>
+                    <p>привет !!! я написал эту записку записку перед тем как мы пошли смотреть на звезды. вот и наступило твое двадцать четвертое день рождение. знаешь, 
+                    за эти 5 лет вместе я так и не научился дарить хорошие подарки, но я стараюсь... помнишь 2025 год? так давно было... мы тогда познакомились,
+                    помню мы оба постоянно тревожились, для меня даже какие то маленькие моменты были критичны, были хорошие и плохие моменты, но мы прошли через все. помнится на твое девятнадцатилетие я не знал что тебе
+                    подарить и решил сделать какой то сайт и даже не смог написать что то искреннее в записке, так как тревожился и не был уверен что стоит писать. сказал прости, что такой хуевый подарок, который не подходит для день рождения, а скорее для юбилея... я тогда лишь мог желать
+                    для тебя всего самого лучшего, бесконечно хотя твоего счастья, я рад что это тяжелое время прошло и сейчас ты счастлива.
+                    </p>
+                     <br>
+                    <p>на каждое твое день рожедние я пытался дать лучшее, что мог, но кажется на этот день у нас все есть все о чем мечтали, домик в лесу, где мы 
+                        можем каждый день жить без забот и без тревог, и самое главное - счастье. 
+                    </p>
+                    <br>
+                    <p>это твой день рождения, так что я наверно думал делать подарок, связанный только с тобой, а не с нами двумя, прости...</p>
+                    <br>
+                    <p>я постараюсь исправиться..</p>
+                    <br>
+                    <p>я люблю тебя</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <audio id="background-music" loop autoplay>
+        <source src="audio/music.mp3" type="audio/mpeg">
+    </audio>
+    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/fireflies.js"></script>
+</body>
+</html>
