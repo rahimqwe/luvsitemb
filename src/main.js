@@ -124,7 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
     preloadInteriorImage() {
         const img = new Image();
         img.src = 'textures/inside.jpeg';
-        img.onload = () => console.log('✅ Интерьер предзагружен');
     },
 
     enterHouse() {
@@ -217,24 +216,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         },
-
-        playBackgroundMusic() {
-            if (elements.backgroundMusic && elements.backgroundMusic.paused) {
-                elements.backgroundMusic.play();
-            }
-        },
-
-        pauseBackgroundMusic() { 
-            if (elements.backgroundMusic && !elements.backgroundMusic.paused) {
-                elements.backgroundMusic.pause();
-            }
-        },
-
-        setVolume(volume) { 
-            if (elements.backgroundMusic) {
-                elements.backgroundMusic.volume = volume;
-            }
-        }
     };
 
     const initSuccess = [
@@ -250,3 +231,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 });
+
